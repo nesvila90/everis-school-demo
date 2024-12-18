@@ -2,21 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfessorService } from '../../services/professor.service';
 import { SubjectService } from '../../services/subject.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-professor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './professor.component.html'
 })
 export class ProfessorComponent implements OnInit {
   professors: any[] = [];
+  filteredProfessors: any[] = [];
   subjects: any[] = [];
   students: any[] = [];
   selectedProfessorId: number | null = null;
   selectedSubjectId: number | null = null;
+  searchProfessor: string = '';
+  searchSubject: string = '';
 
-  constructor(private professorService: ProfessorService, private subjectService: SubjectService) {}
+  constructor(
+    private professorService: ProfessorService,
+    private subjectService: SubjectService
+  ) {}
 
   ngOnInit(): void {
     this.loadProfessors();
@@ -25,7 +32,19 @@ export class ProfessorComponent implements OnInit {
   loadProfessors(): void {
     this.professorService.getAllProfessors().subscribe((data: any[]) => {
       this.professors = data;
+      this.filteredProfessors = data;
     });
+  }
+
+  normalizeString(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  filterProfessors(): void {
+    const search = this.normalizeString(this.searchProfessor);
+    this.filteredProfessors = this.professors.filter(professor =>
+      this.normalizeString(professor.name).includes(search)
+    );
   }
 
   loadSubjects(professorId: number): void {
