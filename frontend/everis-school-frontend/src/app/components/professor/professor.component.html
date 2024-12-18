@@ -1,0 +1,32 @@
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-6">Lista de Profesores</h1>
+    <ul class="flex flex-wrap justify-center gap-4">
+      <li *ngFor="let professor of professors">
+        <button 
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="loadSubjects(professor.id)">
+          {{ professor.name }}
+        </button>
+      </li>
+    </ul>
+  
+    <div *ngIf="selectedProfessorId" class="mt-8">
+      <h2 class="text-2xl font-semibold text-center mb-4">Asignaturas del Profesor</h2>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let subject of subjects" class="text-lg text-gray-700">
+          <button class="text-blue-600 hover:underline" (click)="loadStudents(subject.id)">
+            {{ subject.name }}
+          </button>
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="selectedSubjectId" class="mt-8">
+      <h3 class="text-xl font-medium text-center mb-4">Estudiantes Inscritos</h3>
+      <ul class="list-disc list-inside">
+        <li *ngFor="let student of students" class="text-lg text-gray-600">
+          {{ student.name }}
+        </li>
+      </ul>
+    </div>
+  </div>

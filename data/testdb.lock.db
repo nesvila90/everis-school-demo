@@ -1,6 +1,6 @@
 #FileLock
-#Wed Dec 18 06:48:20 COT 2024
+#Wed Dec 18 08:00:10 COT 2024
 hostName=DESKTOP-CQLI3FV
-id=193d998f3198060e64cdd13d55f4bb118a06cf4c095
+id=193d9dab87ebe4f6c3999105039f4ebab28870d0b31
 method=file
-server=192.168.1.12\:62179
+server=192.168.1.12\:51461
